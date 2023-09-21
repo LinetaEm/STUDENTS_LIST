@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", function (e) {
         e.preventDefault(); 
 
-        const name = document.querySelector("#studentName").value;
+        const studentName = document.querySelector("#studentName").value;
         const age = document.querySelector("#age").value;
         const telephone = document.querySelector("#telephone").value;
         const email = document.querySelector("#email").value;
@@ -29,15 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>`;
         studentsList.insertBefore(studentItem, studentsList.firstChild);
         form.reset();
-
-        const value = document.querySelector("#value");
-        const input = document.querySelector("#studentName"); 
-
-        value.textContent = input.value;
-
-        input.addEventListener("input", (event) => {
-            value.textContent = event.target.value;
-        });
 
     });
 });
