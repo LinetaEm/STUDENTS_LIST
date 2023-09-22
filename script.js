@@ -14,7 +14,7 @@ function handleSubmit(event) {
     const group = document.querySelector('input[name="group"]:checked').value;
     const languages = Array.from(document.querySelectorAll('input[name="languages"]:checked')).map(input => input.value);
 
-    const studentItem = document.createElement('div');
+    let studentItem = document.createElement('div');
     studentItem.classList.add('student-item');
 
     studentItem.innerHTML = `
@@ -28,8 +28,21 @@ function handleSubmit(event) {
     `;
 
     studentsList.insertBefore(studentItem, studentsList.firstChild);
-
     form.reset();
+    studentCreatedNow(name, surname);
+
+}
+
+function studentCreatedNow(firstName, lastName) {
+    let messageSpan = document.createElement('span');
+    messageSpan.textContent = `Student created (${firstName} ${lastName})`;
+    messageSpan.classList.add('student-created-message');
+
+    document.body.appendChild(messageSpan);
+
+    setTimeout(() => {
+        document.body.removeChild(messageSpan);
+    }, 5000);
 }
 
 form.addEventListener('submit', handleSubmit);
