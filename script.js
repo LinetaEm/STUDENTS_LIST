@@ -1,5 +1,6 @@
 const form = document.querySelector('form');
 const studentsList = document.getElementById('students-list');
+const skillsValue = document.getElementById('skills-value');
 
 function handleSubmit(event) {
     event.preventDefault(); 
@@ -32,3 +33,7 @@ function handleSubmit(event) {
 }
 
 form.addEventListener('submit', handleSubmit);
+
+document.getElementById('skills').addEventListener('input', function () {
+    skillsValue.textContent = `Range: ${this.value}`;
+});
