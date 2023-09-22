@@ -1,8 +1,8 @@
-    const form = document.querySelector('form');
-    const studentsList = document.getElementById('students-list');
-    const skillsValue = document.getElementById('skills-value');
+const form = document.querySelector('form');
+const studentsList = document.getElementById('students-list');
+const skillsValue = document.getElementById('skills-value');
 
-    function handleSubmit(event) {
+function handleSubmit(event) {
     event.preventDefault();
 
     const name = document.getElementById('studentName').value;
@@ -17,6 +17,8 @@
     let asteriskEmail = email.replace(/.*/g, '*');
     let asteriskTelephone = telephone.replace(/.*/g, '*');
 
+    let personalDataShown = false; 
+
     let personalDataDiv = document.createElement('div');
     personalDataDiv.classList.add('personal-data');
     personalDataDiv.style.display = 'none';
@@ -27,14 +29,20 @@
     let showButton = document.createElement('button');
     showButton.textContent = 'Show personal data';
 
+    let emailDisplay = document.createElement('p');
+    emailDisplay.textContent = 'Email: ****';
+
+    let phoneDisplay = document.createElement('p');
+    phoneDisplay.textContent = 'Telephone: ****';
+
     studentItem.innerHTML = `
-    <h2>${name} ${surname}</h2>
-    <p>Age: ${age}</p>
-    <p>Telephone: ${telephone}</p>
-    <p>Email: ${email}</p>
-    <p>Skills: ${skills}</p>
-    <p>Group: ${group}</p>
-    <p>Languages: ${languages.join(', ')}</p>
+        <h2>${name} ${surname}</h2>
+        <p>Age: ${age}</p>
+        <p>Telephone: ${asteriskTelephone}</p>
+        <p>Email: ${asteriskEmail}</p>
+        <p>Skills: ${skills}</p>
+        <p>Group: ${group}</p>
+        <p>Languages: ${languages.join(', ')}</p>
     `;
 
     studentItem.appendChild(showButton);
@@ -45,26 +53,23 @@
 
     studentCreatedNow(name, surname);
 
-    let emailDisplay = document.createElement('p');
-    let phoneDisplay = document.createElement('p');
-
     showButton.addEventListener('click', () => {
-    if (showButton.textContent === 'Show personal data') {
-    personalDataDiv.style.display = 'block';
-    showButton.textContent = 'Hide personal data';
-    emailDisplay.textContent = email;
-    phoneDisplay.textContent = telephone;
-    } else {
-    personalDataDiv.style.display = 'none';
-    showButton.textContent = 'Show personal data';
-    emailDisplay.textContent = asteriskEmail;
-    phoneDisplay.textContent = asteriskTelephone;
-    }
+        if (!personalDataShown) {
+            personalDataDiv.style.display = 'block';
+            showButton.textContent = 'Hide personal data';
+            emailDisplay.textContent = `Email: ${email}`;
+            phoneDisplay.textContent = `Telephone: ${telephone}`;
+        } else {
+            personalDataDiv.style.display = 'none';
+            showButton.textContent = 'Show personal data';
+            emailDisplay.textContent = 'Email: ****';
+            phoneDisplay.textContent = 'Telephone: ****';
+        }
+        personalDataShown = !personalDataShown;
     });
+}
 
-    }
-
-    function studentCreatedNow(firstName, lastName) {
+function studentCreatedNow(firstName, lastName) {
     let messageSpan = document.createElement('span');
     messageSpan.textContent = `Student created (${firstName} ${lastName})`;
     messageSpan.classList.add('student-created-message');
@@ -72,15 +77,14 @@
     studentsList.insertBefore(messageSpan, studentsList.firstChild);
 
     setTimeout(() => {
-    studentsList.removeChild(messageSpan); 
+        studentsList.removeChild(messageSpan);
     }, 5000);
-    }
+}
 
+form.addEventListener('submit', handleSubmit);
 
-    form.addEventListener('submit', handleSubmit);
-
-    document.getElementById('skills').addEventListener('input', function () {
+document.getElementById('skills').addEventListener('input', function () {
     skillsValue.textContent = `Range: ${this.value}`;
-    });
+});
 
 
