@@ -30,8 +30,8 @@ showButton.textContent = 'Show personal data';
 studentItem.innerHTML = `
 <h2>${name} ${surname}</h2>
 <p>Age: ${age}</p>
-<p>Telephone: ${asteriskTelephone}</p>
-<p>Email: ${asteriskEmail}</p>
+<p>Telephone: ${telephone}</p>
+<p>Email: ${email}</p>
 <p>Skills: ${skills}</p>
 <p>Group: ${group}</p>
 <p>Languages: ${languages.join(', ')}</p>
@@ -55,7 +55,7 @@ showButton.textContent = 'Hide personal data';
 emailDisplay.textContent = email;
 phoneDisplay.textContent = telephone;
 } else {
-personalDataDiv.style.display = 'block';
+personalDataDiv.style.display = 'none';
 showButton.textContent = 'Show personal data';
 emailDisplay.textContent = asteriskEmail;
 phoneDisplay.textContent = asteriskTelephone;
@@ -84,3 +84,35 @@ skillsValue.textContent = `Range: ${this.value}`;
 });
 
 
+function deleteStudent(studentItem, name, surname) {
+    const confirmation = confirm(`Ar tikrai norite ištrinti studentą ${name} ${surname}?`);
+    if (confirmation) {
+    studentsList.removeChild(studentItem);
+    showDeleteMessage(name, surname);
+    }
+}
+
+function showDeleteMessage(name, surname) {
+    const deleteMessageSpan = document.createElement('span');
+    deleteMessageSpan.textContent = `Studentas (${name} ${surname}) sėkmingai ištrintas.`;
+    deleteMessageSpan.classList.add('student-deleted-message');
+
+    studentsList.insertBefore(deleteMessageSpan, studentsList.firstChild);
+
+    setTimeout(() => {
+    studentsList.removeChild(deleteMessageSpan);
+    }, 5000);
+}
+
+const studentItems = document.querySelectorAll('.student-item');
+studentItems.forEach((studentItem) => {
+    const nameElement = studentItem.querySelector('h2');
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Ištrinti studentą';
+    studentItem.appendChild(deleteButton);
+
+    deleteButton.addEventListener('click', () => {
+    const [name, surname] = nameElement.textContent.split(' ');
+    deleteStudent(studentItem, name, surname);
+    });
+});
