@@ -1,3 +1,81 @@
+const students = [
+    {
+        name: "John",
+        surname: "Doe",
+        age: 22,
+        telephone: "123456",
+        email: "email@email.com",
+        skills: "9",
+        group: "FEU 1 gr.",
+        languages: ["English", "Spanish"]
+    },
+    {
+        name: "Kristina",
+        surname: "Rait",
+        age: 33,
+        telephone: "6543210",
+        email: "email@email.lt",
+        skills: "7",
+        group: "FEU 2 gr.",
+        languages: ["JavaScript, Java, HTML, CSS"]
+    },
+    {
+        name: "Bob",
+        surname: "Johnson",
+        age: 44,
+        telephone: "555-555-5555",
+        email: "email@email.ee",
+        skills: "2",
+        group: "FEU 3 gr.",
+        languages: ["Java, CSS"]
+    },
+    {
+        name: "Tomas",
+        surname: "Brown",
+        age: 55,
+        telephone: "111-222-3333",
+        email: "email@email.sk",
+        skills: "5",
+        group: "FEU 4 gr.",
+        languages: ["HTML, CSS"]
+    },
+    {
+        name: "Eva",
+        surname: "Horn",
+        age: 66,
+        telephone: "777-888-9999",
+        email: "email@email.bg",
+        skills: "10",
+        group: "FEU 5 gr.",
+        languages: ["HTML"]
+    }
+];
+
+function populateStudentData() {
+    const studentsList = document.getElementById('students-list');
+
+    students.forEach(student => {
+        const studentItem = document.createElement('div');
+        studentItem.classList.add('student-item');
+
+        studentItem.innerHTML = `
+            <h2>${student.name} ${student.surname}</h2>
+            <p>Age: ${student.age}</p>
+            <p>Telephone: ${student.telephone}</p>
+            <p>Email: ${student.email}</p>
+            <p>Skills: ${student.skills}</p>
+            <p>Group: ${student.group}</p>
+            <p>Languages: ${student.languages.join(', ')}</p>
+        `;
+
+        studentsList.appendChild(studentItem);
+    });
+}
+
+window.addEventListener('load', populateStudentData);
+
+
+
 const form = document.querySelector('form');
         const studentsList = document.getElementById('students-list');
         const skillsValue = document.getElementById('skills-value');
