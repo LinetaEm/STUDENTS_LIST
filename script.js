@@ -17,7 +17,7 @@ function handleSubmit(event) {
     let asteriskEmail = email.replace(/.*/g, '*');
     let asteriskTelephone = telephone.replace(/.*/g, '*');
 
-    let personalDataShown = false; 
+    let personalDataShown = false;
 
     let personalDataDiv = document.createElement('div');
     personalDataDiv.classList.add('personal-data');
@@ -45,7 +45,17 @@ function handleSubmit(event) {
         <p>Languages: ${languages.join(', ')}</p>
     `;
 
+    let deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete student';
+
+    deleteButton.addEventListener('click', () => {
+        studentsList.removeChild(studentItem);
+
+        showDeletionMessage(`${name} ${surname}`);
+    });
+
     studentItem.appendChild(showButton);
+    studentItem.appendChild(deleteButton);
     studentItem.appendChild(personalDataDiv);
 
     studentsList.insertBefore(studentItem, studentsList.firstChild);
@@ -58,12 +68,12 @@ function handleSubmit(event) {
             personalDataDiv.style.display = 'block';
             showButton.textContent = 'Hide personal data';
             emailDisplay.textContent = `Email: ${email}`;
-            phoneDisplay.textContent = `Telephone: ${telephone}`;
+            phoneDisplay.textContent = `Tel.: ${telephone}`;
         } else {
             personalDataDiv.style.display = 'none';
             showButton.textContent = 'Show personal data';
             emailDisplay.textContent = 'Email: ****';
-            phoneDisplay.textContent = 'Telephone: ****';
+            phoneDisplay.textContent = 'Tel.: ****';
         }
         personalDataShown = !personalDataShown;
     });
@@ -81,10 +91,20 @@ function studentCreatedNow(firstName, lastName) {
     }, 5000);
 }
 
+function showDeletionMessage(fullName) {
+    let deletionMessageSpan = document.createElement('span');
+    deletionMessageSpan.textContent = `Student (${fullName}) successfully deleted.`;
+    deletionMessageSpan.classList.add('deletion-message');
+
+    studentsList.insertBefore(deletionMessageSpan, studentsList.firstChild);
+
+    setTimeout(() => {
+        studentsList.removeChild(deletionMessageSpan);
+    }, 5000);
+}
+
 form.addEventListener('submit', handleSubmit);
 
 document.getElementById('skills').addEventListener('input', function () {
     skillsValue.textContent = `Range: ${this.value}`;
 });
-
-
